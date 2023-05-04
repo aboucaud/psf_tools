@@ -1,0 +1,2050 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A bunch of useful methods for dealing with astronomical PSFs">
+      
+      
+        <meta name="author" content="Alexandre Boucaud">
+      
+      
+        <link rel="canonical" href="https://aboucaud.github.io/psf_tools/api/utils/image.html">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.0, mkdocs-material-8.5.6">
+    
+    
+      
+        <title>psftools.image - PSF tools docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.20d9efc8.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#psftools.utils.image" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="PSF tools docs" class="md-header__button md-logo" aria-label="PSF tools docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PSF tools docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              psftools.image
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/aboucaud/psf_tools" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="PSF tools docs" class="md-nav__button md-logo" aria-label="PSF tools docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    PSF tools docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/aboucaud/psf_tools" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../index.html" class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Scripts
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Scripts" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Scripts
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../scripts/homogenize.html" class="md-nav__link">
+        homogenize
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../scripts/make_kernel.html" class="md-nav__link">
+        make_kernel
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          API
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="API" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          API
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1" type="checkbox" id="__nav_3_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_1">
+          psftools.classes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="psftools.classes" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          psftools.classes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../core.html" class="md-nav__link">
+        psftools.core
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../psf.html" class="md-nav__link">
+        psftools.psf
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" type="checkbox" id="__nav_3_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_2">
+          psftools.utils
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="psftools.utils" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          psftools.utils
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="analysis.html" class="md-nav__link">
+        psftools.analysis
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="deconvolution.html" class="md-nav__link">
+        psftools.deconvolution
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fits.html" class="md-nav__link">
+        psftools.fits
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fitting.html" class="md-nav__link">
+        psftools.fitting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fourier.html" class="md-nav__link">
+        psftools.fourier
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          psftools.image
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="image.html" class="md-nav__link md-nav__link--active">
+        psftools.image
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image" class="md-nav__link">
+    psftools.utils.image
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image--image-submodule" class="md-nav__link">
+    Image submodule
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.center_distance" class="md-nav__link">
+    center_distance()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.center_psf" class="md-nav__link">
+    center_psf()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.centroid" class="md-nav__link">
+    centroid()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.circularize" class="md-nav__link">
+    circularize()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.convolve" class="md-nav__link">
+    convolve()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.find_peak_position" class="md-nav__link">
+    find_peak_position()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.first_moments" class="md-nav__link">
+    first_moments()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.get_e1e2" class="md-nav__link">
+    get_e1e2()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.get_ellipticity" class="md-nav__link">
+    get_ellipticity()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.get_major_minor_axes" class="md-nav__link">
+    get_major_minor_axes()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.get_r_squared" class="md-nav__link">
+    get_r_squared()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.imresample" class="md-nav__link">
+    imresample()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.imrotate" class="md-nav__link">
+    imrotate()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.interpolate_on_nan" class="md-nav__link">
+    interpolate_on_nan()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.merge_images" class="md-nav__link">
+    merge_images()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.mirror_pad" class="md-nav__link">
+    mirror_pad()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.psf_peak_position" class="md-nav__link">
+    psf_peak_position()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.remove_nan" class="md-nav__link">
+    remove_nan()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.second_moments" class="md-nav__link">
+    second_moments()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.trim" class="md-nav__link">
+    trim()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.weighted_second_moments" class="md-nav__link">
+    weighted_second_moments()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.zero_pad" class="md-nav__link">
+    zero_pad()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="info.html" class="md-nav__link">
+        psftools.info
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="misc.html" class="md-nav__link">
+        psftools.misc
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="plotting.html" class="md-nav__link">
+        psftools.plotting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="profiles.html" class="md-nav__link">
+        psftools.profiles
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image" class="md-nav__link">
+    psftools.utils.image
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image--image-submodule" class="md-nav__link">
+    Image submodule
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.center_distance" class="md-nav__link">
+    center_distance()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.center_psf" class="md-nav__link">
+    center_psf()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.centroid" class="md-nav__link">
+    centroid()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.circularize" class="md-nav__link">
+    circularize()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.convolve" class="md-nav__link">
+    convolve()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.find_peak_position" class="md-nav__link">
+    find_peak_position()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.first_moments" class="md-nav__link">
+    first_moments()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.get_e1e2" class="md-nav__link">
+    get_e1e2()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.get_ellipticity" class="md-nav__link">
+    get_ellipticity()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.get_major_minor_axes" class="md-nav__link">
+    get_major_minor_axes()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.get_r_squared" class="md-nav__link">
+    get_r_squared()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.imresample" class="md-nav__link">
+    imresample()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.imrotate" class="md-nav__link">
+    imrotate()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.interpolate_on_nan" class="md-nav__link">
+    interpolate_on_nan()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.merge_images" class="md-nav__link">
+    merge_images()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.mirror_pad" class="md-nav__link">
+    mirror_pad()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.psf_peak_position" class="md-nav__link">
+    psf_peak_position()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.remove_nan" class="md-nav__link">
+    remove_nan()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.second_moments" class="md-nav__link">
+    second_moments()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.trim" class="md-nav__link">
+    trim()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.weighted_second_moments" class="md-nav__link">
+    weighted_second_moments()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#psftools.utils.image.zero_pad" class="md-nav__link">
+    zero_pad()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <a href="https://github.com/aboucaud/psf_tools/edit/master/docs/api/utils/image.md" title="Edit this page" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+  <h1>psftools.image</h1>
+
+<div class="doc doc-object doc-module">
+
+
+<a id="psftools.utils.image"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="psftools.utils.image--image-submodule">Image submodule<a class="headerlink" href="#psftools.utils.image--image-submodule" title="Permanent link">&para;</a></h2>
+<p>Various methods that operate on 2D images.</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="psftools.utils.image.center_distance" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">center_distance</span><span class="p">(</span><span class="n">size_x</span><span class="p">,</span> <span class="n">size_y</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></code>
+
+<a href="#psftools.utils.image.center_distance" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Return the pixel distance to the array center</p>
+
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>size_x</b>
+        – <p>Size along the x-axis of the square array</p>
+      </li>
+      <li class="field-body">
+        <b>size_y</b>
+        – <p>Size along the y-axis if different from x
+(default 0)</p>
+      </li>
+  </ul>
+
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b>distance</b>(            <code>2d </code>
+)        – <p>Euclidian distance (in pixels) from the center of the array</p>
+      </li>
+  </ul>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="psftools.utils.image.center_psf" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">center_psf</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+<a href="#psftools.utils.image.center_psf" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Shift the psf image to put the maximum at the center</p>
+
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>image</b>
+        – <p>Image array (PSF)</p>
+      </li>
+      <li class="field-body">
+        <b>order</b>
+        – <p>interpolation order (default 1: bilinear)</p>
+      </li>
+      <li class="field-body">
+        <b>verbose</b>
+        – <p>If <code>True</code>, allow for printed info (default False)</p>
+      </li>
+  </ul>
+
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b>shifted_image</b>        – <p>Centered psf image with odd number of pixels on both axes</p>
+      </li>
+  </ul>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="psftools.utils.image.centroid" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">centroid</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">pixscl</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span></code>
+
+<a href="#psftools.utils.image.centroid" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Compute the image centroid iteratively with Gaussian weights.</p>
+<p>The weight is a circular two-dimensional Gaussian function centered
+on the first moments of the image at each iteration if the center is
+not specified as input.</p>
+
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>input</b>
+        – <p>Input image</p>
+      </li>
+      <li class="field-body">
+        <b>sigma</b>
+        – <p>Width of the weighting Gaussian in arcsec</p>
+      </li>
+      <li class="field-body">
+        <b>pixscl</b>
+        – <p>Pixel scale of the image to scale the Gaussian function</p>
+      </li>
+      <li class="field-body">
+        <b>n_iter</b>
+        – <p>Number of iterations of the weighting (default 3)</p>
+      </li>
+  </ul>
+
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+            <code>mu_x, mu_y</code>
+        – <p>Coordinates of the cendroid in the image plane</p>
+      </li>
+  </ul>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="psftools.utils.image.circularize" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">circularize</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">interp_order</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+<a href="#psftools.utils.image.circularize" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Circularize an image.</p>
+<p>Successively rotate the image and add it to itself
+with angles decreasing by a factor 2 every iteration.
+This is numerically equivalent to computing the average
+over 2^n rotations where n is the number of iterations.
+THe default choice of n_iter = 14 hence produces an image
+invariant under rotations of any angle that is a multiple
+of 360/2^14 = 360/16384 ~ 0.022 deg</p>
+
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>image</b>
+        – <p>Image to circularize</p>
+      </li>
+      <li class="field-body">
+        <b>n_iter</b>
+        – <p>Number of iterations in the process (default 14)</p>
+      </li>
+      <li class="field-body">
+        <b>interp_order</b>
+        – <p>Spline interpolation order in the rotation
+* 0 : linear
+* 1 : bilinear
+* 2 : bicubic (default)</p>
+      </li>
+  </ul>
+
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+            <code>Circularized image </code>
+        – 
+      </li>
+  </ul>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="psftools.utils.image.convolve" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">convolve</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+<a href="#psftools.utils.image.convolve" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Convolution in real space using scipy ndimage library</p>
+
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>image</b>
+        – <p>image to be convolved</p>
+      </li>
+      <li class="field-body">
+        <b>kernel</b>
+        – <p>convolution kernel</p>
+      </li>
+      <li class="field-body">
+        <b>verbose</b>
+        – <p>if True, print information concerning the convolution process
+(default False)</p>
+      </li>
+  </ul>
+
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b>final_image</b>        – 
+      </li>
+  </ul>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="psftools.utils.image.find_peak_position" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">find_peak_position</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">fit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+<a href="#psftools.utils.image.find_peak_position" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Basic implementation of a maximum position finder</p>
+
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>image</b>
+        – <p>Image array (PSF)</p>
+      </li>
+      <li class="field-body">
+        <b>fit</b>
+        – <p>Fit a Gaussian distribution to the PSF and
+return center position (default <code>False</code>)</p>
+      </li>
+  </ul>
+
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b>coords</b>(            <code>tuple of int</code>
+)        – <p>Position of the peak as a tuple of array indices</p>
+      </li>
+  </ul>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="psftools.utils.image.first_moments" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">first_moments</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span></code>
+
+<a href="#psftools.utils.image.first_moments" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Compute the first moments (axis means) of the given image</p>
+
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>input</b>
+        – <p>Input image</p>
+      </li>
+  </ul>
+
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b>mu_x</b>(            <code>float</code>
+)        – <p>First moment on the x-axis</p>
+      </li>
+      <li class="field-body">
+<b>mu_y</b>(            <code>float</code>
+)        – <p>First moment on the y-axis</p>
+      </li>
+  </ul>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="psftools.utils.image.get_e1e2" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_e1e2</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">pixscl</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span></code>
+
+<a href="#psftools.utils.image.get_e1e2" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Compute the ellipticity components of the given image
+as the weighted second moments of the image.</p>
+
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>input</b>
+        – <p>Input image</p>
+      </li>
+      <li class="field-body">
+        <b>sigma</b>
+        – <p>Width of the weighting Gaussian in arcsec (default 0.75)</p>
+      </li>
+      <li class="field-body">
+        <b>pixscl</b>
+        – <p>Pixel scale of the image (default 0.1)</p>
+      </li>
+      <li class="field-body">
+        <b>n_iter</b>
+        – <p>Number of iterations of the weighting (default 3)</p>
+      </li>
+  </ul>
+
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b>e1</b>(            <code>float</code>
+)        – <p>Real component of the ellipticity</p>
+      </li>
+      <li class="field-body">
+<b>e2</b>(            <code>float</code>
+)        – <p>Imaginary component of the ellipticity</p>
+      </li>
+  </ul>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="psftools.utils.image.get_ellipticity" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_ellipticity</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">pixscl</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span></code>
+
+<a href="#psftools.utils.image.get_ellipticity" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Compute the ellipticity the given image</p>
+
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>input</b>
+        – <p>Input image</p>
+      </li>
+      <li class="field-body">
+        <b>sigma</b>
+        – <p>Width of the weighting Gaussian in arcsec (default 0.75)</p>
+      </li>
+      <li class="field-body">
+        <b>pixscl</b>
+        – <p>Pixel scale of the image (default 0.1)</p>
+      </li>
+      <li class="field-body">
+        <b>n_iter</b>
+        – <p>Number of iterations of the weighting (default 3)</p>
+      </li>
+  </ul>
+
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b>ellipticity</b>(            <code>float</code>
+)        – <p>Ellipticity comprised between 0 and 1</p>
+      </li>
+  </ul>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="psftools.utils.image.get_major_minor_axes" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_major_minor_axes</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">pixscl</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span></code>
+
+<a href="#psftools.utils.image.get_major_minor_axes" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Compute the major and minor axes of the given image
+from the quadrupole moments</p>
+
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>input</b>
+        – <p>Input image</p>
+      </li>
+      <li class="field-body">
+        <b>sigma</b>
+        – <p>Width of the weighting Gaussian in arcsec (default 0.75)</p>
+      </li>
+      <li class="field-body">
+        <b>pixscl</b>
+        – <p>Pixel scale of the image (default 0.1)</p>
+      </li>
+      <li class="field-body">
+        <b>n_iter</b>
+        – <p>Number of iterations of the weighting (default 3)</p>
+      </li>
+  </ul>
+
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+            <code>a, b</code>
+        – <p>Major and minor axes of the image</p>
+      </li>
+  </ul>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="psftools.utils.image.get_r_squared" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_r_squared</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">pixscl</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span></code>
+
+<a href="#psftools.utils.image.get_r_squared" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Compute R2 factor in arcseconds</p>
+
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>input</b>
+        – <p>Input image</p>
+      </li>
+      <li class="field-body">
+        <b>sigma</b>
+        – <p>Width of the weighting Gaussian in arcsec (default 0.75)</p>
+      </li>
+      <li class="field-body">
+        <b>pixscl</b>
+        – <p>Pixel scale of the image (default 0.1)</p>
+      </li>
+      <li class="field-body">
+        <b>n_iter</b>
+        – <p>Number of iterations of the weighting (default 3)</p>
+      </li>
+  </ul>
+
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b>r_squared</b>(            <code>float</code>
+)        – <p>R2 factor in arcseconds</p>
+      </li>
+  </ul>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="psftools.utils.image.imresample" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">imresample</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">input_pscale</span><span class="p">,</span> <span class="n">target_pscale</span><span class="p">,</span> <span class="n">interp_order</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></code>
+
+<a href="#psftools.utils.image.imresample" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Resample data array from one pixel scale to another</p>
+
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>image</b>
+        – <p>Input data array</p>
+      </li>
+      <li class="field-body">
+        <b>input_pscale</b>
+            (<code>float</code>)
+        – <p>Pixel scale of <code>image</code> in arcseconds</p>
+      </li>
+      <li class="field-body">
+        <b>target_pscale</b>
+            (<code>float</code>)
+        – <p>Pixel scale of output array in arcseconds</p>
+      </li>
+      <li class="field-body">
+        <b>interp_order</b>
+            (<code>int, optional</code>)
+        – <p>Spline interpolation order [0, 5] (default 1: linear)</p>
+      </li>
+  </ul>
+
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b>output</b>        – <p>Resampled data array</p>
+      </li>
+  </ul>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="psftools.utils.image.imrotate" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">imrotate</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="n">reshape</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">interp_order</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></code>
+
+<a href="#psftools.utils.image.imrotate" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Rotate image from North to East from the given angle in degrees</p>
+
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>image</b>
+        – <p>Data array</p>
+      </li>
+      <li class="field-body">
+        <b>angle</b>
+            (<code>float</code>)
+        – <p>Rotation angle in degrees</p>
+      </li>
+      <li class="field-body">
+        <b>reshape</b>
+            (<code>bool, optional</code>)
+        – <p>Whether the input array should be contained in the output one
+(default False)</p>
+      </li>
+      <li class="field-body">
+        <b>interp_order</b>
+            (<code>int, optional</code>)
+        – <p>Interpolation order [1-5]
+(default 1 = linear)</p>
+      </li>
+  </ul>
+
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b>output</b>        – <p>Rotated data array</p>
+      </li>
+  </ul>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="psftools.utils.image.interpolate_on_nan" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">interpolate_on_nan</span><span class="p">(</span><span class="n">image</span><span class="p">)</span></code>
+
+<a href="#psftools.utils.image.interpolate_on_nan" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Replaces NaNs by interpolated values on the given array</p>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="psftools.utils.image.merge_images" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">merge_images</span><span class="p">(</span><span class="n">core</span><span class="p">,</span> <span class="n">tail</span><span class="p">,</span> <span class="n">radius_transition</span><span class="p">)</span></code>
+
+<a href="#psftools.utils.image.merge_images" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Merge a core image with an analytic tail</p>
+
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>core</b>
+        – <p>Core image</p>
+      </li>
+      <li class="field-body">
+        <b>tail</b>
+        – <p>Analytic tail</p>
+      </li>
+      <li class="field-body">
+        <b>radius_transition</b>
+        – <p>Characteristic radius where the transition
+between core and tail occurs</p>
+      </li>
+  </ul>
+
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b>merged_image</b>        – <p>The merged image</p>
+      </li>
+  </ul>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="psftools.utils.image.mirror_pad" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">mirror_pad</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">pad_x</span><span class="p">,</span> <span class="n">pad_y</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span></code>
+
+<a href="#psftools.utils.image.mirror_pad" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Extends original 2d-image on every edge mirroring its content</p>
+
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>image</b>
+        – <p>Input image</p>
+      </li>
+      <li class="field-body">
+        <b>pad_x</b>
+        – <p>The size of the padding in x-axis</p>
+      </li>
+      <li class="field-body">
+        <b>pad_y</b>
+        – <p>The size of the y-axis padding if diff from x (default -1)</p>
+      </li>
+  </ul>
+
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b>img_pad</b>        – <p>The padded image</p>
+      </li>
+  </ul>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="psftools.utils.image.psf_peak_position" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">psf_peak_position</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">crop_factor</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span></code>
+
+<a href="#psftools.utils.image.psf_peak_position" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Iterative finder of the position of the psf peak</p>
+
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>image</b>
+        – <p>Image array (PSF)</p>
+      </li>
+      <li class="field-body">
+        <b>crop_factor</b>
+        – <p>Factor of image reduction for computational speed (default 5)</p>
+      </li>
+      <li class="field-body">
+        <b>n_iter</b>
+        – <p>Number of maximum iterations in the smoothing process
+aimed at peak enhancement (default 5)</p>
+      </li>
+  </ul>
+
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b>coords</b>(            <code>tuple of ints</code>
+)        – <p>Coordinates of the peak in the input image</p>
+      </li>
+  </ul>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="psftools.utils.image.remove_nan" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">remove_nan</span><span class="p">(</span><span class="n">image</span><span class="p">)</span></code>
+
+<a href="#psftools.utils.image.remove_nan" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Replaces NaNs by zeros in the given array</p>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="psftools.utils.image.second_moments" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">second_moments</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span></code>
+
+<a href="#psftools.utils.image.second_moments" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Compute the second moments of the given image</p>
+
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>input</b>
+        – <p>Input image</p>
+      </li>
+  </ul>
+
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+            <code>q_xx, q_yy, q_xy</code>
+        – <p>Second moments of the image</p>
+      </li>
+  </ul>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="psftools.utils.image.trim" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">trim</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<a href="#psftools.utils.image.trim" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Trim image to a given shape</p>
+
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>image</b>
+        – <p>Input image</p>
+      </li>
+      <li class="field-body">
+        <b>shape</b>
+        – <p>Desired output shape of the image</p>
+      </li>
+      <li class="field-body">
+        <b>mask</b>
+        – <p>Mask corresponding to the desired values in the image.
+Should have a rectangular shape given as input.
+(defaut <code>None</code>)</p>
+      </li>
+  </ul>
+
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b>new_image</b>(            <code>2D </code>
+)        – <p>Input image trimmed</p>
+      </li>
+  </ul>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="psftools.utils.image.weighted_second_moments" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">weighted_second_moments</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">pixscl</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<a href="#psftools.utils.image.weighted_second_moments" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Compute iteratively the weighted second moments of the image.</p>
+<p>The weight is a circular two-dimensional Gaussian function centered
+on the first moments of the image at each iteration if the center is
+not specified as input.</p>
+
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>input</b>
+        – <p>Input image</p>
+      </li>
+      <li class="field-body">
+        <b>sigma</b>
+        – <p>Width of the weighting Gaussian in arcsec</p>
+      </li>
+      <li class="field-body">
+        <b>pixscl</b>
+        – <p>Pixel scale of the image to scale the Gaussian function</p>
+      </li>
+      <li class="field-body">
+        <b>n_iter</b>
+        – <p>Number of iterations of the weighting (default 3)</p>
+      </li>
+      <li class="field-body">
+        <b>center</b>
+        – <p>Fixed center for the Gaussian weight (default <code>None</code>)</p>
+      </li>
+  </ul>
+
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+            <code>Q_xx, Q_yy, Q_xy</code>
+        – <p>Second moments (quadrupoles) of the image</p>
+      </li>
+  </ul>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="psftools.utils.image.zero_pad" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">zero_pad</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s1">&#39;corner&#39;</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+<a href="#psftools.utils.image.zero_pad" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Extends image to a certain size with zeros</p>
+
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>image</b>
+        – <p>Input image</p>
+      </li>
+      <li class="field-body">
+        <b>shape</b>
+        – <p>Desired output shape of the image</p>
+      </li>
+      <li class="field-body">
+        <b>mask</b>
+        – <p>If <code>True</code> returns a mask corresponding to the position of the
+input image in the output one. (default <code>False</code>)</p>
+      </li>
+      <li class="field-body">
+        <b>position</b>
+            (<code>str, optional</code>)
+        – <p>The position of the input image in the output one:
+* 'corner'
+top-left corner (default)
+* 'center'
+centered</p>
+      </li>
+  </ul>
+
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b>padded_img</b>(            <code>real</code>
+)        – <p>The zero-padded image</p>
+      </li>
+      <li class="field-body">
+            <code>[mask</code>
+        – <p>The corresponding mask (if mask = True)]</p>
+      </li>
+  </ul>
+
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="fourier.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: psftools.fourier" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              psftools.fourier
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="info.html" class="md-footer__link md-footer__link--next" aria-label="Next: psftools.info" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              psftools.info
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2014-2023 <a href="https://twitter.com/alxbcd">Alexandre Boucaud</a>.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.5bf1dace.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.078830c0.min.js"></script>
+      
+        <script src="../../js/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

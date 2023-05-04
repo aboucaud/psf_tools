@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 """
-===========
-make_kernel
-===========
+# make_kernel
+
 Compute the transition kernel between two PSFs
 
 It takes two images (FITS files) as input, a high-frequencies
@@ -14,37 +13,39 @@ parameter.
 
 Alternatively, the user can decide to use the Aniano recipe
 (circularization + high-frequency filtering) by passing the
---aniano keyword.
+`--aniano` keyword.
 
-Usage:
-  make_kernel [-h] [psf_input] [psf_target] [-o [output]]
-              [-p [pixel_scale]] [--angle_input] [--angle_target]
-              [-R [regfact]] [-A, --aniano] [-m, --minimize]
-              [-v, --verbose]
+## Usage
 
-Args:
-  psf_input:        path to the input PSF (FITS image)
-  psf_target:       path to the low resolution PSF (FITS image)
-  -o output:        the output filename and path
-  -p pixel_scale:   pixel scale of the output fits in arcsec
+```
+make_kernel [-h] [psf_input] [psf_target] [-o [output]]
+            [-p [pixel_scale]] [--angle_input] [--angle_target]
+            [-R [regfact]] [-A, --aniano] [-m, --minimize]
+            [-v, --verbose]
+```
 
-Optionals:
-  -h, --help:       print help
-  --angle_input:    rotate image from North to East given the angle
-                    in degrees (default 0.0)
-  --angle_target:   rotate image from North to East given the angle
-                    in degrees (default 0.0)
-  -R, --regfact:    regularization factor
-                    (default 1e-5)
-  -A, --aniano:     use the Aniano method instead of Wiener filtering
-                    (default False)
-  -m, --minimize:   minimize the size of the output kernel
-                    (default False) (currently unavailable)
-  -v, --verbose:    print information while running the script
-                    (default False)
+## Arguments
 
-Author:
-  Alexandre Boucaud <alexandre.boucaud@ias.u-psud.fr>
+* `psf_input`:        path to the input PSF (FITS image)
+* `psf_target`:       path to the low resolution PSF (FITS image)
+* `-o output`:        the output filename and path
+* `-p pixel_scale`:   pixel scale of the output fits in arcsec
+
+## Optionals
+
+* `-h`, `--help`:     print help
+* `--angle_input`:    rotate image from North to East given the angle
+                      in degrees (default 0.0)
+* `--angle_target`:   rotate image from North to East given the angle
+                      in degrees (default 0.0)
+* `-R`, `--regfact`:  regularization factor
+                      (default 1e-5)
+* `-A`, `--aniano`:   use the Aniano method instead of Wiener filtering
+                      (default False)
+* `-m`, `--minimize`: minimize the size of the output kernel
+                      (default False) (currently unavailable)
+* `-v`, `--verbose`:  print information while running the script
+                      (default False)
 
 """
 

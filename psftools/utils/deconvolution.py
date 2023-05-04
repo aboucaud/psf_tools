@@ -1,6 +1,6 @@
 """
-Deconvolution module
---------------------
+# Deconvolution module
+
 Methods used for image deconvolution
 
 """

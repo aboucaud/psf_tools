@@ -1,6 +1,6 @@
 """
-Fits submodule
---------------
+# Fits submodule
+
 Enables I/O operations with FITS files and headers
 
 """
@@ -126,7 +126,7 @@ def save_fits(filepath, fitsfile, copy=True):
 
     Parameters
     ----------
-    filename: str
+    filepath: str
         Name of output FITS file
     fitsfile: `fits.hdu.image.PrimaryHDU`
         Image data embedded in a pyfits object

@@ -1,6 +1,6 @@
 """
-Fourier submodule
------------------
+# Fourier submodule
+
 Methods involving Fourier transform or the Fourier domain.
 + Wrapper methods for pyFFTW
 

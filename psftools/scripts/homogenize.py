@@ -1,22 +1,27 @@
 #!/usr/bin/env python
 """
-=============
-homogenize.py
-=============
+# homogenize
+
 Perform a convolution of a FITS image with an homogenization kernel
 
-Usage:
-    homogenize.py [-h] [-v] [image] [-k [kernel]] [-o [outputfile]]
-                  [--real] [--numpy]
-Args:
-    image:      path to FITS image to be homogenized
-Optionals:
-    -h, --help: print help
-    -v:         verbose-mode
-    -k kernel:  path to the convolution kernel
-    -o output:  provides the name of output FITS file
-    --real:     uses real-space convolution instead of Fourier-space
-    --numpy:    uses numpy methods instead of scipy's (for Fourier conv)
+## Usage
+
+```
+homogenize.py [-h] [-v] [image] [-k [kernel]] [-o [outputfile]]
+              [--real] [--numpy]
+```
+
+## Arguments
+
+* `image`:      path to FITS image to be homogenized
+
+## Optionals
+
+* `-h`, `--help`: print help
+* `-v`:         verbose-mode
+* `-k kernel`:  path to the convolution kernel
+* `-o output`:  provides the name of output FITS file
+* `--real`:     uses real-space convolution instead of Fourier-space
 
 """
 import os

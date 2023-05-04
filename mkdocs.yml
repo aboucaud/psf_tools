@@ -1,0 +1,84 @@
+site_name: PSF tools docs
+repo_url: https://github.com/aboucaud/psf_tools
+site_url: https://aboucaud.github.io/psf_tools/
+site_description: A bunch of useful methods for dealing with astronomical PSFs
+site_author: Alexandre Boucaud
+use_directory_urls: false
+# Theming
+theme:
+  name: material
+  language: en
+  palette:
+    # primary: teal
+    # accent: indigo
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+  font:
+    text: Roboto
+    code: Roboto Mono
+  feature:
+    tabs: true
+
+# Content
+nav:
+  - Home: index.md
+  - Scripts:
+      - homogenize: scripts/homogenize.md
+      - make_kernel: scripts/make_kernel.md
+  - API:
+      - psftools.classes modules:
+          - core: api/core.md
+          - psf: api/psf.md
+      - psftools.utils modules:
+          - analysis: api/utils/analysis.md
+          - deconvolution: api/utils/deconvolution.md
+          - fits: api/utils/fits.md
+          - fitting: api/utils/fitting.md
+          - fourier: api/utils/fourier.md
+          - image: api/utils/image.md
+          - info: api/utils/info.md
+          - misc: api/utils/misc.md
+          - plotting: api/utils/plotting.md
+          - profiles: api/utils/profiles.md
+
+# Plugins
+plugins:
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          options:
+            show_source: false
+            docstring_section_style: list
+            docstring_style: numpy
+      # watch:
+        # - psftools
+  - search
+copyright: Copyright &copy; 2014-2023 <a href="https://twitter.com/alxbcd">Alexandre Boucaud</a>.
+# Mkdocs material extensions
+# https://squidfunk.github.io/mkdocs-material/extensions
+markdown_extensions:
+  - admonition
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem
+  - pymdownx.caret
+  - pymdownx.inlinehilite
+  - pymdownx.highlight:
+      use_pygments: true
+  - pymdownx.superfences
+  - toc:
+      permalink: true
+
+extra_javascript:
+  - js/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js

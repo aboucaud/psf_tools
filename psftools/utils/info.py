@@ -1,6 +1,6 @@
 """
-Info submodule
---------------
+# Info submodule
+
 Gather useful information on a PSF file
 
 """

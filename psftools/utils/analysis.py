@@ -1,6 +1,7 @@
 """
-Analysis submodule
-------------------
+# Analysis submodule
+
+Set of methods to evaluate the profile of the PSF
 
 """
 import numpy as np
@@ -52,20 +53,20 @@ def slow_get_radius(value, distance, profile):
     return distance[idmin] + delta * (distance[idmax] - distance[idmin])
 
 
-def slow_azimuthal_profile(image, origin, bin, nbins):
+def slow_azimuthal_profile(image, origin, bin, n_bins):
     """Azimuthal profile of a 2d image.
 
-    x, y[, n] = profile(image, [origin, bin, nbins, histogram])
+    x, y[, n] = profile(image, [origin, bin, n_bins, histogram])
 
     Parameters
     ----------
-    input: `numpy.ndarray`
+    image : `numpy.ndarray`
         2D input array
-    origin: tuple of float
+    origin : tuple of float
         Center of profile (Fits convention)
-    bin: float
+    bin : float
         Width of the profile bins (in unit of pixels).
-    nbins: int
+    n_bins : int
         Number of profile bins.
 
     Returns
@@ -82,9 +83,9 @@ def slow_azimuthal_profile(image, origin, bin, nbins):
     ny = image.shape[1]
     xmid, ymid = origin
 
-    rad = np.zeros(nbins, dtype=np.float)
-    profile = np.zeros(nbins, dtype=np.float)
-    histo = np.zeros(nbins, dtype=np.int)
+    rad = np.zeros(n_bins, dtype=np.float)
+    profile = np.zeros(n_bins, dtype=np.float)
+    histo = np.zeros(n_bins, dtype=np.int)
     for i in range(nx):
         for j in range(ny):
             val = image[i, j]
@@ -92,13 +93,13 @@ def slow_azimuthal_profile(image, origin, bin, nbins):
                 continue
             distance = np.sqrt((i - xmid) ** 2 + (j - ymid) ** 2)
             ibin = int(distance / bin)
-            if ibin >= nbins:
+            if ibin >= n_bins:
                 continue
             rad[ibin] = rad[ibin] + distance
             profile[ibin] = profile[ibin] + val
             histo[ibin] = histo[ibin] + 1
 
-    for i in range(nbins):
+    for i in range(n_bins):
         if histo[i] != 0:
             rad[i] = rad[i] / histo[i]
             profile[i] = profile[i] / histo[i]
@@ -119,6 +120,7 @@ except ImportError:
 def profile(input, origin=None, bin=1.0, nbins=None, histogram=False):
     """
     Returns axisymmetric profile of a 2d image.
+
     x, y[, n] = profile(image, [origin, bin, nbins, histogram])
 
     Parameters
@@ -218,7 +220,7 @@ def circ_psd(image, sampling_freq=1, plot=False):
     image : `numpy.ndarray`
         Image array
     sampling_freq : float, optional (default = 1)
-       The sampling frequency.
+        The sampling frequency.
     plot : bool, optional (default `True`)
         If `True`, draws the PSD w.r.t. radius in log scale
 

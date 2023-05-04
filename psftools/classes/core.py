@@ -1,6 +1,5 @@
 """
-Core submodule
---------------
+# Core submodule
 
 """
 import os

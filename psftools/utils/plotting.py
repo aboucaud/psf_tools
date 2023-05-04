@@ -1,7 +1,7 @@
 """
-Plotting submodule
-------------------
-Useful plotting methods
+# Plotting submodule
+
+Useful PSF plotting methods
 
 """
 import numpy as np

@@ -1,6 +1,6 @@
 """
-Image submodule
----------------
+# Image submodule
+
 Various methods that operate on 2D images.
 
 """
@@ -47,11 +47,6 @@ def convolve(image, kernel, verbose=False):
         image to be convolved
     kernel: `numpy.ndarray`
         convolution kernel
-    use_real: bool, optional
-        if True, compute the convolution in real-space (default False)
-    use_numpy: bool, optional
-        if True, compute the Fourier convolution using numpy libraries
-        (default False)
     verbose: bool, optional
         if True, print information concerning the convolution process
         (default False)
@@ -844,7 +839,7 @@ def merge_images(core, tail, radius_transition):
         Core image
     tail: `numpy.ndarray`
         Analytic tail
-    transition_radius: float
+    radius_transition: float
         Characteristic radius where the transition
         between core and tail occurs
 

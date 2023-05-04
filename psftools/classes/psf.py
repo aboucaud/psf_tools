@@ -1,6 +1,6 @@
 """
-PSF submodule
--------------
+# PSF submodule
+
 Class handling PSF FITS image and header and various operations on them.
 
 """
@@ -543,12 +543,6 @@ class PSF(ImageFits):
         we set to zero all the output values that correspond
         to input values whose norm is less that 1.e-7 times
         the peak value.
-
-        Parameters
-        ----------
-        filtered: bool, optional
-            If `True`, apply an additional fourier filter to the result
-            (default `True`)
 
         Returns
         -------

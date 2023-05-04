@@ -1,6 +1,6 @@
 """
-Fitting submodule
------------------
+# Fitting submodule
+
 Classes and methods for fitting distributions of PSF images
 and characterizing them.
 

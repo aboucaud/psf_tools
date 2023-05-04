@@ -1,6 +1,6 @@
 """
-Misc submodule
----------------
+# Misc submodule
+
 Helper methods for use in various contexts.
 
 """

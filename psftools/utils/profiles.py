@@ -1,7 +1,7 @@
 """
-PSF profiles submodule
-----------------------
-Common PSF profiles and helper functions
+# PSF profiles submodule
+
+Common PSF analytic profiles and helper functions
 
 """
 import numpy as np

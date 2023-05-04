@@ -22,8 +22,8 @@ Optionals:
 import os
 
 from psftools import PSF, ImageFits
-from psftools.fits import write_fits
-from psftools.image import zero_pad
+from psftools.utils.fits import write_fits
+from psftools.utils.image import zero_pad
 
 
 def print_help(*msg):

@@ -24,4 +24,4 @@ Some of this work has benefited from daily exchanges with Hervé Dole (IAS), Ala
 
 License
 -------
-The code is licensed under the [MIT license](LICENCE).
+The code is released under the [MIT license](LICENSE).

@@ -22,7 +22,7 @@ class ImageFits:
     ----------
     input : str, list or numpy.ndarray
         Path to the image FITS file or image data
-    pixelscale : float, optional (default 0.0)
+    pixel_scale : float, optional (default 0.0)
         Pixel scale of input image data in arcseconds
     backup : bool, optional (default `False`)
         Create a backup when loading the data
@@ -72,9 +72,7 @@ class ImageFits:
 
         Parameters
         ----------
-        input : str, list or numpy.ndarray
-            Path to the image FITS file or image data
-        pixelscale : float
+        pixel_scale : float
             Pixel scale of input image data in arcseconds
         backup : bool
             Create a backup when loading the data

@@ -24,7 +24,7 @@ class PSF(ImageFits):
     ----------
     filename : str
         Path to the image FITS file
-    pixelscale : float, optional (default 0.0)
+    pixel_scale : float, optional (default 0.0)
         Pixel scale of input image data in arcseconds
     backup : bool
         Create a backup when loading the data
@@ -54,8 +54,8 @@ class PSF(ImageFits):
 
     """
 
-    def __init__(self, filename, pixelscale=0.0, backup=True, verbose=False):
-        ImageFits.__init__(self, filename, pixelscale, backup, verbose)
+    def __init__(self, filename, pixel_scale=0.0, backup=True, verbose=False):
+        ImageFits.__init__(self, filename, pixel_scale, backup, verbose)
         self.image = np.nan_to_num(self.image)
 
         self.fwhm = 0.0
@@ -121,17 +121,17 @@ class PSF(ImageFits):
 
         self.fwhm = round(2 * hwhm, 3)
 
-    def normalize(self, tomax=False):
+    def normalize(self, to_max=False):
         """Kernel normalization
 
         Parameters
         ----------
-        max: bool, optional
+        to_max: bool, optional
             If true, normalize to the maximum value in the array
             (default False)
 
         """
-        if tomax:
+        if to_max:
             imax = self.image.max()
             if imax != 0:
                 self.image /= imax
@@ -167,7 +167,7 @@ class PSF(ImageFits):
             self.make_odd_square()
             self.center_psf()
 
-        self.normalize(tomax=True)
+        self.normalize(to_max=True)
 
         wh_thresh = self.image > thresh
         cleaned_image = np.zeros_like(self.image)
@@ -240,7 +240,7 @@ class PSF(ImageFits):
             self.update_header_key("CRPIX1", new_size // 2)
             self.update_header_key("CRPIX2", new_size // 2)
 
-            self.normalize(tomax=True)
+            self.normalize(to_max=True)
 
             flux_new = self.image.sum()
             flux_loss = 100.0 * (flux_new - flux_old) / flux_old

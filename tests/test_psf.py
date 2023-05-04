@@ -23,8 +23,8 @@ listdata4d = [
     [[[8, 9], [10, 11]], [[12, 13], [14, 15]]],
 ]
 
-kdict = {"pixelscale": 1.0, "backup": False, "verbose": False}
-kdict_bck = {"pixelscale": 1.0, "backup": True, "verbose": False}
+kdict = {"pixel_scale": 1.0, "backup": False, "verbose": False}
+kdict_bck = {"pixel_scale": 1.0, "backup": True, "verbose": False}
 
 
 def test_load_data():
